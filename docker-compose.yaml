@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  fbdatools:
+    image: bplein/fbdatools:latest
+    container_name: fbdatools
+    hostname: fbdatools
+    restart: always
+    network_mode: "host"
+    volumes:
+      - $HOME:/root
+      - example:/mnt
+volumes:
+  example:
+    driver_opts:
+      type: "nfs"
+      o: "addr=172.17.0.30,nolock,soft,rw"
+      device: ":/volume2/dockertest"
