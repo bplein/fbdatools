@@ -7,6 +7,8 @@ services:
     hostname: fbdatools
     restart: always
     network_mode: "host"
+    ports:
+        - "${SQL_PORT}"
     volumes:
       - $HOME:/root
       - example:/mnt
@@ -14,5 +16,5 @@ volumes:
   example:
     driver_opts:
       type: "nfs"
-      o: "addr=172.17.0.30,nolock,soft,rw"
+      o: "addr=${NFS_MOUNT},nolock,soft,rw"
       device: ":/volume2/dockertest"
