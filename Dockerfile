@@ -48,7 +48,7 @@ RUN echo "source /usr/local/bin/util.sh" >> ~root/.bashrc
 RUN echo "source /etc/profile.d/bash_completion.sh" >> ~root/.bashrc
 
 RUN adduser --uid "$IUID" --shell /bin/bash --disabled-login --gecos "" "$USER" \
-    && mkdir /home/$USER/.ssh && ssh-keygen -t rsa -q -f "/home/$USER/.ssh/id_rsa" -N "" && chown -R $USER:$USER /home/$USER/.ssh \
+    && mkdir /home/$USER/.ssh && ssh-keygen -t rsa -f "/home/$USER/.ssh/id_rsa" -N "" && chown -R $USER:$USER /home/$USER/.ssh \
     && cp /home/iridium/.ssh/id_rsa /home/iridium/.ssh/authorized_keys && echo "$USER:$PASSWORD" | chpasswd
      
 
