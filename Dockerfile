@@ -15,8 +15,6 @@ ENV SSH_PORT=7777
 ARG  S5CMDVERSION=1.0.0
 # Used by git to download the Gist I host of a file we need
 ARG  RUNUTILGIST=841f3e5ce73da9a3bea7e7d31fdb7651
-# NFSometer version, if we decide to use it
-ARG  NFSOMETERVERSION=1.9
 # helps apt run better non-interactively
 ARG  DEBIAN_FRONTEND=noninteractive
 
@@ -36,10 +34,12 @@ RUN curl -L https://github.com/peak/s5cmd/releases/download/v${S5CMDVERSION}/s5c
 RUN git clone https://gist.github.com/${RUNUTILGIST}.git && mv /${RUNUTILGIST}/util.sh /usr/local/bin/ && chmod +x /usr/local/bin/util.sh && \
     rm -rf /${RUNUTILGIST}
 # Install python packages for NFSometer - tzdata already installed above
-RUN apt install -y time python-setuptools python-mako python-matplotlib python-numpy nfs-common
+#RUN apt install -y time python-setuptools python-mako python-matplotlib python-numpy nfs-common
+# NFSometer version, if we decide to use it
+#ARG  NFSOMETERVERSION=1.9
 # Install NFSometer https://wiki.linux-nfs.org/wiki/index.php/NFSometer
-RUN curl -L http://www.linux-nfs.org/~dros/nfsometer/releases/nfsometer-${NFSOMETERVERSION}.tar.gz | tar xzf - && \
-    cd /nfsometer-${NFSOMETERVERSION} && python setup.py install && cd / && rm -rf /nfsometer-${NFSOMETERVERSION}
+#RUN curl -L http://www.linux-nfs.org/~dros/nfsometer/releases/nfsometer-${NFSOMETERVERSION}.tar.gz | tar xzf - && \
+#    cd /nfsometer-${NFSOMETERVERSION} && python setup.py install && cd / && rm -rf /nfsometer-${NFSOMETERVERSION}
 
 #RUN apt-get -y upgrade 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/
