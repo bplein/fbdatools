@@ -11,16 +11,10 @@ services:
     volumes:
       - ./tools:/home/$USER/tools
       - mnt1:/mnt/mnt1
-      - mnt2:/mnt/mnt2
 volumes:
   mnt1:
     driver_opts:
       type: "nfs"
       o: "addr=${NFS_HOST},nolock,soft,rw,local_lock=none"
-      device: ":/volume2/dockertest/mnt1"
-  mnt2:
-    driver_opts:
-      type: "nfs"
-      o: "addr=${NFS_HOST},nolock,soft,rw,local_lock=none"
-      device: ":/volume2/dockertest/mnt2"
+      device: ":/${NFS_EXPORT}"
     

@@ -20,7 +20,8 @@ ARG  DEBIAN_FRONTEND=noninteractive
 
 # Set up apt and get various things we need. Set time to Central. This can be overridden in the docker-compose.yaml or via docker run CLI
 RUN apt-get update && \	
-    apt install -y tzdata curl wget git pv iperf3 fio bash-completion iputils-ping openssh-server openssh-client && \
+    apt install -y tzdata curl wget git pv iperf3 fio bash-completion \
+    iputils-ping openssh-server openssh-client nano vim sudo && \
     ln -fs /usr/share/zoneinfo/America/Chicago /etc/localtime && mkdir /run/sshd
 
 # Install tools
@@ -33,14 +34,6 @@ RUN curl -L https://github.com/peak/s5cmd/releases/download/v${S5CMDVERSION}/s5c
 # Install util.sh "run" command that makes pretty output like you are typing. Useful for demos.
 RUN git clone https://gist.github.com/${RUNUTILGIST}.git && mv /${RUNUTILGIST}/util.sh /usr/local/bin/ && chmod +x /usr/local/bin/util.sh && \
     rm -rf /${RUNUTILGIST}
-# Install python packages for NFSometer - tzdata already installed above
-#RUN apt install -y time python-setuptools python-mako python-matplotlib python-numpy nfs-common
-# NFSometer version, if we decide to use it
-#ARG  NFSOMETERVERSION=1.9
-# Install NFSometer https://wiki.linux-nfs.org/wiki/index.php/NFSometer
-#RUN curl -L http://www.linux-nfs.org/~dros/nfsometer/releases/nfsometer-${NFSOMETERVERSION}.tar.gz | tar xzf - && \
-#    cd /nfsometer-${NFSOMETERVERSION} && python setup.py install && cd / && rm -rf /nfsometer-${NFSOMETERVERSION}
-
 #RUN apt-get -y upgrade 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/
 
